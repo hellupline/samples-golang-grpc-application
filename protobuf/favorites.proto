@@ -1,0 +1,90 @@
+syntax = "proto3";
+
+option go_package = "./favorites";
+package api.favorites;
+
+
+import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
+
+
+service Favorites {
+    rpc Search(FavoriteSearchRequest) returns (FavoriteSearchResponse) {
+        option (google.api.http) = {
+            get: "/api/v1/favorites"
+        };
+    }
+    rpc Create(FavoriteCreateRequest) returns (FavoriteCreateResponse) {
+        option (google.api.http) = {
+            post: "/api/v1/favorites"
+        };
+    }
+    rpc Read(FavoriteReadRequest) returns (FavoriteReadResponse) {
+        option (google.api.http) = {
+            get: "/api/v1/favorites/{name}"
+        };
+    }
+    rpc Update(FavoriteUpdateRequest) returns (FavoriteUpdateResponse) {
+        option (google.api.http) = {
+            post: "/api/v1/favorites/{name}"
+        };
+    }
+    rpc Delete(FavoriteDeleteRequest) returns (FavoriteDeleteResponse) {
+        option (google.api.http) = {
+            post: "/api/v1/favorites/{name}"
+        };
+    }
+}
+
+
+message FavoriteMessage {
+    string name = 1;
+    google.protobuf.Timestamp created_at = 2;
+    google.protobuf.Timestamp updated_at = 3;
+
+    uint64 count = 4;
+}
+
+
+message FavoriteSearchRequest {
+}
+
+message FavoriteSearchResponse {
+    repeated FavoriteMessage favorites = 1;
+}
+
+
+message FavoriteCreateRequest {
+    FavoriteMessage favorite = 1;
+}
+
+message FavoriteCreateResponse {
+    FavoriteMessage favorite = 1;
+}
+
+
+message FavoriteReadRequest {
+    string name = 1;
+}
+
+message FavoriteReadResponse {
+    FavoriteMessage favorite = 1;
+}
+
+
+message FavoriteUpdateRequest {
+    string name = 1;
+    FavoriteMessage favorite = 2;
+}
+
+message FavoriteUpdateResponse {
+    FavoriteMessage favorite = 1;
+}
+
+
+message FavoriteDeleteRequest {
+    string name = 1;
+}
+
+message FavoriteDeleteResponse {
+}
